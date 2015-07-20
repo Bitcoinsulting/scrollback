@@ -1,8 +1,9 @@
-/* jshint browser:true */
+/* eslint-env browser */
 
 "use strict";
 
 var appUtils = require("../lib/app-utils.js"),
+	objUtils = require("../lib/obj-utils.js"),
 	LS = window.localStorage;
 
 module.exports = function(core, config, store) {
@@ -29,6 +30,7 @@ module.exports = function(core, config, store) {
 		var user = changes.user || store.get("user");
 
 		if (changes.entities && changes.entities[user] && user && appUtils.isGuest(user)) {
+			changes.entities[user] = objUtils.clone(changes.entities[user]);
 			changes.entities[user].params = changes.entities[user].params || {};
 			changes.entities[user].params.notifications = currentNotifications;
 		}
